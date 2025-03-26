@@ -3,6 +3,7 @@ import { styles } from "./styles"
 import { Counter } from "./Counter"
 import { Task } from "./Task"
 import { TaskDTO } from "../../Dto/Task"
+import { EmptyList } from "./EmptyList"
 
 interface TasksDTO {
     tasks: Array<TaskDTO>;
@@ -26,16 +27,19 @@ export const Tasks = ({tasks, handleDeleteTask,handleUpdateTask}: TasksDTO) => {
                     number={tasks.filter(tasks => tasks.active).length}
                 />
             </View>
-            {tasks.map(task => (
-                <Task 
-                    onCheck={() => handleUpdateTask(task.id)}
-                    onDelete={() => handleDeleteTask(task.id)}
-                    key={task.id} 
-                    active={task.active}
-                    text={task.text}
-                />
-
-            ))}
+            {tasks.length ?
+                tasks.map(task => (
+                    <Task 
+                        onCheck={() => handleUpdateTask(task.id)}
+                        onDelete={() => handleDeleteTask(task.id)}
+                        key={task.id} 
+                        active={task.active}
+                        text={task.text}
+                    />
+    
+                )) : 
+                <EmptyList />
+            }
         </View>
     )
 }
